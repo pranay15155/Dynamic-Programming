@@ -1,0 +1,23 @@
+
+
+
+
+
+#include <bits/stdc++.h> 
+    int f(int ind,int sum,vector<int>& nums,vector<vector<int>>&dp){
+        if(sum==0)return 1;
+        if(ind==0)return nums[0]==sum;
+        if(dp[ind][sum]!=-1)return dp[ind][sum];
+        int nottake=f(ind-1,sum,nums,dp);
+        int take=0;
+        if(nums[ind]<=sum)take=f(ind-1,sum-nums[ind],nums,dp);
+        return dp[ind][sum]=take+nottake;
+    }
+int findWays(vector<int> &num, int tar)
+{
+    // Write your code here.
+            int n=num.size();
+        vector<vector<int>>dp(n,vector<int>(tar+1,-1));
+        return f(n-1,tar,num,dp);
+}
+
