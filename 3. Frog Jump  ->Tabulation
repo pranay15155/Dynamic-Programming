@@ -1,0 +1,102 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define li long long int
+#define ppb pop_back
+#define ct cout 
+#define el "\n"
+#define sz size()
+#define ff first
+#define ss second
+#define sg string
+#define vec vector<li>
+#define vvi vector<vector<li>>
+#define ppi pair<int,pair<int,int>>
+#define pii pair<li,li>
+#define vep vector<pair<li,li>>
+#define mep map<li,li>
+#define ves vector<string>
+#define isort(n) sort(n.begin(), n.end())
+#define dsort(n) sort(n.begin(), n.end(), greater<int>());
+#define all(n) n.begin(), n.end()
+#define ub upper_bound
+#define lb lower_bound
+#define maxe *max_element
+#define mine *min_element
+#define X INT_MAX
+#define Y INT_MIN
+#define sp " "
+#define yes "YES"
+#define no "NO"
+
+void take(vector<li> &v , int size){
+    for (int i = 0; i <size ; ++i)
+    {
+        li k;
+        cin>>k;
+        v.pb(k);
+    }
+}
+
+void printvec(vector<li> &v ){
+for (int i = 0; i < v.size(); ++i)
+{
+    ct<<v[i]<<" ";
+}
+ct<<el;
+}
+
+
+
+void pranay_prasoon(){
+li n;
+vec v;
+cin>>n;
+take(v,n);
+vec dp(n,0);
+dp[0]=0;
+for (int i = 1; i < n; ++i)
+{
+ li first=dp[i-1]+abs(v[i]-v[i-1]);
+ li second=X;
+ if(i>1)second=dp[i-2]+abs(v[i]-v[i-2]);
+ dp[i]=min(first,second);
+}
+ct<< dp[n-1]<<el;
+printvec(dp);
+
+
+
+
+
+ }
+int main()
+{
+ios_base::sync_with_stdio(false);
+cin.tie(NULL);
+cout.tie(NULL);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif // ONLINE_JUDGE
+    int queries;
+    cin >> queries;
+    while (queries--)
+    {
+        pranay_prasoon();
+    }
+    return 0;
+}
+
+
+//INPUT
+// 1
+// 6
+// 30 10 60 10 60 50
+
+
+//OUTPUT
+// 40
+// 0 20 30 20 30 40 
+
