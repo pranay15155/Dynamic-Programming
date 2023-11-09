@@ -1,0 +1,74 @@
+#include <bits/stdc++.h> 
+
+int f(int ind,int sum,vector<int> &value,vector<int>&weight,vector<vector<int>>&dp){
+ if(ind==0){
+     if(weight[0]<=sum)return value[0];
+     return 0;
+ }
+ if(dp[ind][sum]!=-1)return dp[ind][sum];
+ int notpick=f(ind-1,sum,value,weight,dp);
+ int pick=INT_MIN;
+ if(sum>=weight[ind])pick=f(ind-1,sum-weight[ind],value,weight,dp)+value[ind]; 
+ return dp[ind][sum]=max(pick,notpick);
+}
+
+
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+    //MEMOISTAION *******************************************
+
+	// vector<vector<int>>dp(n,vector<int>(maxWeight+1,-1));
+    // return f(n-1,maxWeight,value,weight,dp);
+
+    //TABULATION  *******************************************
+
+    // vector<vector<int>>dp(n,vector<int>(maxWeight+1,0));
+    // for(int wt=weight[0];wt<maxWeight+1;wt++)dp[0][wt]=value[0];
+    // for(int ind=0;ind<n;ind++)dp[ind][0]=0;
+
+    // for(int ind=1;ind<n;ind++){
+    //     for(int wt=0;wt<maxWeight+1;wt++){
+    //      int notpick=dp[ind-1][wt];
+    //      int pick=INT_MIN;
+    //      if(wt>=weight[ind])pick=dp[ind-1][wt-weight[ind]]+value[ind];
+    //      dp[ind][wt]=max(pick,notpick);
+    //     }
+    // }
+    // return dp[n-1][maxWeight];
+
+
+   //SPACE OPTIMIZATION  ************************************
+
+//    vector<int>prev(maxWeight+1,0);
+//    for(int wt=weight[0];wt<maxWeight+1;wt++)prev[wt]=value[0];
+
+//     for(int ind=1;ind<n;ind++){
+//         vector<int>curr(maxWeight+1,0);
+//         for(int wt=0;wt<maxWeight+1;wt++){
+//          int notpick=prev[wt];
+//          int pick=INT_MIN;
+//          if(wt>=weight[ind])pick=prev[wt-weight[ind]]+value[ind];
+//          curr[wt]=max(pick,notpick);
+//         }
+//         prev=curr;
+//     }
+//     return prev[maxWeight];
+
+
+    //SPACE OPTIMIZATION USING 1 ROW
+ 
+  vector<int>prev(maxWeight+1,0);
+   for(int wt=weight[0];wt<maxWeight+1;wt++)prev[wt]=value[0];
+
+    for(int ind=1;ind<n;ind++){
+        for(int wt=maxWeight;wt>=0;wt--){
+         int notpick=prev[wt];
+         int pick=INT_MIN;
+         if(wt>=weight[ind])pick=prev[wt-weight[ind]]+value[ind];
+         prev[wt]=max(pick,notpick);
+        }
+    }
+    return prev[maxWeight];
+
+
+}
