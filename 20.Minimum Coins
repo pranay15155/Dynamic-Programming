@@ -1,0 +1,149 @@
+static const auto init = []{cin.tie(NULL);ios::sync_with_stdio(false);return false;}();
+
+
+#define pb push_back
+#define li long long int
+#define uli unsigned long long int
+#define ppb pop_back
+#define ct cout 
+#define el "\n"
+#define sz(s) (long long int )(s.size())
+#define ff first
+#define ss second
+#define sg string
+#define vec vector<int>
+#define vvi vector<vector<int>>
+#define ppi pair<int,pair<int,int>>
+#define pii pair<int,int>
+#define vep vector<pair<int,int>>
+#define mep map<int,int>
+#define ves vector<string>
+#define isort(n) sort(n.begin(), n.end())
+#define dsort(n) sort(n.begin(), n.end(), greater<int>());
+#define all(n) n.begin(), n.end()
+#define ub upper_bound
+#define lb lower_bound
+#define maxe *max_element
+#define mine *min_element
+#define X INT_MAX
+#define Y INT_MIN
+#define sp " "
+#define cy  cout<<"YES"<<endl
+#define cn  cout<<"NO"<<endl
+#define unq(v)  v.resize(distance(v.begin(), unique(v.begin(), v.end())));
+#define acc(v,r)  accumulate(v.begin(),v.begin()+r,0ll)
+li MOD=1e9+7;   
+
+
+
+#define d(x) cout << #x <<" "; _print(x); cout << endl;
+#define d2(x,y) cout << #x<<" "<<#y <<"  ";_print(x);cout<<" ";_print(y); cout << endl;
+#define d3(x,y,z) cout << #x<<" "<<#y<<" "<<#z <<"  ";_print(x);cout<<" ";_print(y);cout<<" ";_print(z); cout << endl;
+#define spc()  cout << endl;
+
+void _print(li t) {cerr << t;}
+void _print(int t) {cout << t;}
+void _print(string t) {cout << t;}
+void _print(char t) {cout << t;}
+void _print(double t) {cout << t;}
+void _print(float t) {cout << t;}
+
+template<class T, class V> void _print(pair <T, V> p);
+template<class T> void _print(vector <T> v);
+template<class T> void _print(set <T> v);
+template<class T, class V> void _print(map <T, V> v);
+template<class T> void _print(multiset <T> v);
+template<class T, class V> void _print(pair <T, V> p) {cout << "{"; _print(p.ff); cout << ","; _print(p.ss); cout << "}";}
+template<class T> void _print(vector <T> v) {cout << "[ "; for (T i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T> void _print(set <T> v) {cout << "[ "; for (T i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T> void _print(multiset <T> v) {cout << "[ "; for (T i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T, class V> void _print(map <T, V> v) {cout << "[ "; for (auto i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T> void _print(stack<T>s){vector<T>v;while(s.size()){v.pb(s.top());s.pop();}_print(v);}
+template<class T> void _print(queue<T>q){vector<T>v;while(q.size()){v.pb(q.front());q.pop();}_print(v);}
+template<class T> void _print(priority_queue<T>q){vector<T>v;while(q.size()){v.pb(q.top());q.pop();}_print(v);}
+template<class T> void _print(priority_queue<T,vector<T>,greater<T>>q){vector<T>v;while(q.size()){v.pb(q.top());q.pop();}_print(v);}
+template<class T> void _print(deque<T>q){vector<T>v;while(q.size()){v.pb(q.front());q.pop_front();}_print(v);}
+
+
+sg number_to_string(li n){sg ans;while(n){if (n&1){ans+='1';}else ans+='0';n=n>>1;}reverse(all(ans));return ans;}
+li string_to_number(sg s){reverse(all(s));li ans=0;for (int i = 0; i < s.size(); ++i){if (s[i]=='1'){ans+=(1<<i);}}return ans;}
+li made_ceil(li divident,li divisor){if (divident%divisor==0){return (divident/divisor);}else{return (divident/divisor)+1;}}
+
+
+
+
+class Solution {
+public:
+    int f(int ind , int sum , vector<int>& coins, vvi &dp ){
+        if(ind==0){
+            int no=sum/coins[ind];
+            if(no*coins[ind]==sum)return no;
+            return 1e8;
+        }
+        if(dp[ind][sum]!=-1)return dp[ind][sum];
+        int nottake=f(ind-1,sum,coins,dp);
+        int take=1e8;
+        if(sum>=coins[ind]){
+            take=1+f(ind,sum-coins[ind],coins,dp);
+        }
+       return  dp[ind][sum]=min(take,nottake);
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        int n=sz(coins);
+        
+        //MEMOISATION *****************************************************************
+        
+        // vvi dp(n,vec(amount+1,-1));
+        // int t=f(n-1,amount,coins,dp);
+        // if(t<1e8)return t;
+        // return -1;
+        
+        
+        //TABULATION  *****************************************************************
+        
+//         vvi dp(n,vec(amount+1,1e8));
+        
+//         for(int t=0;t<=amount;t++){
+//             if(t%coins[0]==0)dp[0][t]=t/coins[0];
+//             else dp[0][t]=1e8;
+//         }
+//         for(int ind=1;ind<n;ind++){
+//             for(int t=0;t<=amount;t++){
+//                 int nottake=dp[ind-1][t];
+//                 int take=1e8;
+//                 if(t>=coins[ind])take=dp[ind][t-coins[ind]]+1;
+//                 dp[ind][t]=min(take,nottake);
+//             }
+//         }
+//         int t=dp[n-1][amount];
+//         if(t<1e8)return t;
+//         return -1;
+        
+        
+        
+        
+        //SPACE OPTIMIZATION  ******************************************************************
+        
+        vec prev(amount+1,1e8);
+        
+        for(int t=0;t<=amount;t++){
+            if(t%coins[0]==0)prev[t]=t/coins[0];
+            else prev[t]=1e8;
+        }
+        
+        for(int ind=1;ind<n;ind++){
+            vec curr(amount+1,1e8);
+            for(int t=0;t<=amount;t++){
+                int nottake=prev[t];
+                int take=1e8;
+                if(t>=coins[ind])take=curr[t-coins[ind]]+1;
+                curr[t]=min(take,nottake);
+            }
+            prev=curr;
+        }
+        int t=prev[amount];
+        if(t<1e8)return t;
+        return -1;
+        
+}
+};
