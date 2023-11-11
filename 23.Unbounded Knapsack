@@ -73,8 +73,8 @@ li made_ceil(li divident,li divisor){if (divident%divisor==0){return (divident/d
 
 int f(int ind,int sum,vec &weight,vec &profit,vvi &dp){
     if(ind==0){
-        if(sum%weight[0]==0)return (sum/weight[0])*profit[0];
-        return -1e8;
+        return (sum/weight[0])*profit[0];
+        
     }
     if(dp[ind][sum]!=-1)return dp[ind][sum];
     int nottake=f(ind-1,sum,weight,profit,dp);
@@ -90,51 +90,51 @@ int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight){
     //MEMOISATION ************************************************
 
 
-    // vvi dp(n,vec(w+1,-1));
-    // int t= f(n-1,w,weight,profit,dp);
-    // if(t>0)return t;
-    // return 0;
+    vvi dp(n,vec(w+1,-1));
+    int t= f(n-1,w,weight,profit,dp);
+    if(t>0)return t;
+    return 0;
 
     //TABULATION *************************************************
 
-//     vvi dp(n,vec(w+1,-1e8));
-//     for(int wt=0;wt<=w;wt++){
-//         if(wt%weight[0]==0)dp[0][wt]=(wt/weight[0])*profit[0];
-//     }
+    // vector<vector<int>> dp(n,vector<int>(w+1,-1e8));
+    // for(int wt=0;wt<=w;wt++){
+    //     dp[0][wt]=(wt/weight[0])*profit[0];
+    // }
 
-//     for(int ind=1;ind<n;ind++){
-//         for(int wt=0;wt<=w;wt++){
-//             int nottake=dp[ind-1][wt];
-//             int take=-1e8;
-//             if(wt>=weight[ind])take=dp[ind][wt-weight[ind]]+profit[ind];
-//             dp[ind][wt]=max(take,nottake);
-//         }
-//     }
-//    int t=dp[n-1][w];
-//    if(t>0)return t;
-//     return 0;
+    // for(int ind=1;ind<n;ind++){
+    //     for(int wt=0;wt<=w;wt++){
+    //         int nottake=dp[ind-1][wt];
+    //         int take=-1e8;
+    //         if(wt>=weight[ind])take=dp[ind][wt-weight[ind]]+profit[ind];
+    //         dp[ind][wt]=max(take,nottake);
+    //     }
+    // }
+    // int t=dp[n-1][w];
+    // if(t>0)return t;
+    // return 0;
 
 
 //SPACE OPTIMIZATION ***********************************************
 
 
-    vec prev(w+1,-1e8);
-    for(int wt=0;wt<=w;wt++){
-        if(wt%weight[0]==0)prev[wt]=(wt/weight[0])*profit[0];
-    }
+//     vec prev(w+1,-1e8);
+//     for(int wt=0;wt<=w;wt++){
+//         prev[wt]=(wt/weight[0])*profit[0];
+//     }
 
-    for(int ind=1;ind<n;ind++){
-        vec curr(w+1,-1e8);
-        for(int wt=0;wt<=w;wt++){
-            int nottake=prev[wt];
-            int take=-1e8;
-            if(wt>=weight[ind])take=curr[wt-weight[ind]]+profit[ind];
-            curr[wt]=max(take,nottake);
-        }
-        prev=curr;
-    }
-   int t=prev[w];
-   if(t>0)return t;
-    return 0;
+//     for(int ind=1;ind<n;ind++){
+//         vec curr(w+1,-1e8);
+//         for(int wt=0;wt<=w;wt++){
+//             int nottake=prev[wt];
+//             int take=-1e8;
+//             if(wt>=weight[ind])take=curr[wt-weight[ind]]+profit[ind];
+//             curr[wt]=max(take,nottake);
+//         }
+//         prev=curr;
+//     }
+//    int t=prev[w];
+//    if(t>0)return t;
+//     return 0;
 
 }
