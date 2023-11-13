@@ -1,0 +1,127 @@
+static const auto init = []{cin.tie(NULL);ios::sync_with_stdio(false);return false;}();
+
+
+#define pb push_back
+#define li long long int
+#define uli unsigned long long int
+#define ppb pop_back
+#define ct cout 
+#define el "\n"
+#define sz(s) (long long int )(s.size())
+#define ff first
+#define ss second
+#define sg string
+#define vec vector<int>
+#define vvi vector<vector<int>>
+#define ppi pair<int,pair<int,int>>
+#define pii pair<int,int>
+#define vep vector<pair<int,int>>
+#define mep map<int,int>
+#define ves vector<string>
+#define isort(n) sort(n.begin(), n.end())
+#define dsort(n) sort(n.begin(), n.end(), greater<int>());
+#define all(n) n.begin(), n.end()
+#define ub upper_bound
+#define lb lower_bound
+#define maxe *max_element
+#define mine *min_element
+#define X INT_MAX
+#define Y INT_MIN
+#define sp " "
+#define cy  cout<<"YES"<<endl
+#define cn  cout<<"NO"<<endl
+#define unq(v)  v.resize(distance(v.begin(), unique(v.begin(), v.end())));
+#define acc(v,r)  accumulate(v.begin(),v.begin()+r,0ll)
+li MOD=1e9+7;   
+
+
+
+#define d(x) cout << #x <<" "; _print(x); cout << endl;
+#define d2(x,y) cout << #x<<" "<<#y <<"  ";_print(x);cout<<" ";_print(y); cout << endl;
+#define d3(x,y,z) cout << #x<<" "<<#y<<" "<<#z <<"  ";_print(x);cout<<" ";_print(y);cout<<" ";_print(z); cout << endl;
+#define spc()  cout << endl;
+
+void _print(li t) {cerr << t;}
+void _print(int t) {cout << t;}
+void _print(string t) {cout << t;}
+void _print(char t) {cout << t;}
+void _print(double t) {cout << t;}
+void _print(float t) {cout << t;}
+
+template<class T, class V> void _print(pair <T, V> p);
+template<class T> void _print(vector <T> v);
+template<class T> void _print(set <T> v);
+template<class T, class V> void _print(map <T, V> v);
+template<class T> void _print(multiset <T> v);
+template<class T, class V> void _print(pair <T, V> p) {cout << "{"; _print(p.ff); cout << ","; _print(p.ss); cout << "}";}
+template<class T> void _print(vector <T> v) {cout << "[ "; for (T i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T> void _print(set <T> v) {cout << "[ "; for (T i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T> void _print(multiset <T> v) {cout << "[ "; for (T i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T, class V> void _print(map <T, V> v) {cout << "[ "; for (auto i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T> void _print(stack<T>s){vector<T>v;while(s.size()){v.pb(s.top());s.pop();}_print(v);}
+template<class T> void _print(queue<T>q){vector<T>v;while(q.size()){v.pb(q.front());q.pop();}_print(v);}
+template<class T> void _print(priority_queue<T>q){vector<T>v;while(q.size()){v.pb(q.top());q.pop();}_print(v);}
+template<class T> void _print(priority_queue<T,vector<T>,greater<T>>q){vector<T>v;while(q.size()){v.pb(q.top());q.pop();}_print(v);}
+template<class T> void _print(deque<T>q){vector<T>v;while(q.size()){v.pb(q.front());q.pop_front();}_print(v);}
+
+
+sg number_to_string(li n){sg ans;while(n){if (n&1){ans+='1';}else ans+='0';n=n>>1;}reverse(all(ans));return ans;}
+li string_to_number(sg s){reverse(all(s));li ans=0;for (int i = 0; i < s.size(); ++i){if (s[i]=='1'){ans+=(1<<i);}}return ans;}
+li made_ceil(li divident,li divisor){if (divident%divisor==0){return (divident/divisor);}else{return (divident/divisor)+1;}}
+
+
+
+
+class Solution {
+public:
+    int f(sg &s1,sg &s2,int ind1,int ind2,vvi &dp){
+        if(ind1<0 || ind2<0)return 0;
+        if(dp[ind1][ind2]!=-1)return dp[ind1][ind2];
+        if(s1[ind1]==s2[ind2])return 1+f(s1,s2,ind1-1,ind2-1,dp);
+        return dp[ind1][ind2]=max(f(s1,s2,ind1-1,ind2,dp),f(s1,s2,ind1,ind2-1,dp));
+    }
+    int longestCommonSubsequence(string text1, string text2) {
+        
+        //MEMOISATION ***********************************************
+        
+        // vvi dp(sz(text1),vec(sz(text2),-1));
+        // return f(text1,text2,sz(text1)-1,sz(text2)-1,dp);
+        
+        //TABULATION ************************************************
+        
+//         vvi dp(sz(text1)+1,vec(sz(text2)+1,0));
+      
+//         for(int ind1=1;ind1<=sz(text1);ind1++){
+//             for(int ind2=1;ind2<=sz(text2);ind2++){
+//                 if(text1[ind1-1]==text2[ind2-1]){
+//                     dp[ind1][ind2]=1+dp[ind1-1][ind2-1];
+//                 }
+//                 else{
+//                     dp[ind1][ind2]=max(dp[ind1-1][ind2],dp[ind1][ind2-1]);
+//                 }  
+//             }
+//         }
+//         d(dp)
+//         return dp[sz(text1)][sz(text2)];
+        
+        
+        //SPACE OPTIMIZATION ****************************************
+        
+        vec prev(sz(text2)+1,0);
+        
+        for(int ind1=1;ind1<=sz(text1);ind1++){
+            vec curr(sz(text2)+1,0);
+            for(int ind2=1;ind2<=sz(text2);ind2++){
+                if(text1[ind1-1]==text2[ind2-1]){
+                   curr[ind2]=1+prev[ind2-1];
+                }
+                else{
+                   curr[ind2]=max(prev[ind2],curr[ind2-1]);
+                }  
+            }
+            prev=curr;
+        }
+        return prev[sz(text2)];
+        
+    }
+};
