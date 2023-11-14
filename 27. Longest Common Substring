@@ -71,10 +71,32 @@ li string_to_number(sg s){reverse(all(s));li ans=0;for (int i = 0; i < s.size();
 li made_ceil(li divident,li divisor){if (divident%divisor==0){return (divident/divisor);}else{return (divident/divisor)+1;}}
 
 
+int maxi=0;
+int f(sg &s1,sg &s2,int ind1,int ind2,vvi &dp)
+    {
+        // d2(ind1,ind2);
+        if(ind1<0 || ind2<0)return 0;
+        if(dp[ind1][ind2]!=-1)return dp[ind1][ind2];
+        if(s1[ind1]==s2[ind2]){dp[ind1][ind2]=1+f(s1,s2,ind1-1,ind2-1,dp);maxi=max(maxi,dp[ind1][ind2]);}
+        else dp[ind1][ind2]=0;
+        f(s1,s2,ind1-1,ind2,dp);
+        f(s1,s2,ind1,ind2-1,dp);
+        return dp[ind1][ind2];
+    }
 
 
 int lcs(string &text1, string &text2){
-       vvi dp(sz(text1)+1,vec(sz(text2)+1,0));
+
+    //MEMOISATION *******************************************
+
+
+//    vvi dp(sz(text1),vec(sz(text2),-1));
+//    f(text1,text2,sz(text1)-1,sz(text2)-1,dp);
+//    return maxi;
+
+    //TABULATION ********************************************
+
+      vvi dp(sz(text1)+1,vec(sz(text2)+1,0));
         int ans=INT_MIN;
         for(int ind1=1;ind1<=sz(text1);ind1++){
             for(int ind2=1;ind2<=sz(text2);ind2++){
@@ -88,5 +110,6 @@ int lcs(string &text1, string &text2){
             }
         }
         return ans;
+
 
 }
