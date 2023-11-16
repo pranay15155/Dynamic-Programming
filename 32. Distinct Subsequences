@@ -1,0 +1,156 @@
+static const auto init = []{cin.tie(NULL);ios::sync_with_stdio(false);return false;}();
+
+
+#define pb push_back
+#define li long long int
+#define uli unsigned long long int
+#define ppb pop_back
+#define ct cout 
+#define el "\n"
+#define sz(s) (long long int )(s.size())
+#define ff first
+#define ss second
+#define sg string
+#define vec vector<int>
+#define vvi vector<vector<long long>>
+#define ppi pair<int,pair<int,int>>
+#define pii pair<int,int>
+#define vep vector<pair<int,int>>
+#define mep map<int,int>
+#define ves vector<string>
+#define isort(n) sort(n.begin(), n.end())
+#define dsort(n) sort(n.begin(), n.end(), greater<int>());
+#define all(n) n.begin(), n.end()
+#define ub upper_bound
+#define lb lower_bound
+#define maxe *max_element
+#define mine *min_element
+#define X INT_MAX
+#define Y INT_MIN
+#define sp " "
+#define cy  cout<<"YES"<<endl
+#define cn  cout<<"NO"<<endl
+#define unq(v)  v.resize(distance(v.begin(), unique(v.begin(), v.end())));
+#define acc(v,r)  accumulate(v.begin(),v.begin()+r,0ll)
+li MOD=1e9+7;   
+
+
+
+#define d(x) cout << #x <<" "; _print(x); cout << endl;
+#define d2(x,y) cout << #x<<" "<<#y <<"  ";_print(x);cout<<" ";_print(y); cout << endl;
+#define d3(x,y,z) cout << #x<<" "<<#y<<" "<<#z <<"  ";_print(x);cout<<" ";_print(y);cout<<" ";_print(z); cout << endl;
+#define spc()  cout << endl;
+
+void _print(li t) {cerr << t;}
+void _print(int t) {cout << t;}
+void _print(string t) {cout << t;}
+void _print(char t) {cout << t;}
+void _print(double t) {cout << t;}
+void _print(float t) {cout << t;}
+
+template<class T, class V> void _print(pair <T, V> p);
+template<class T> void _print(vector <T> v);
+template<class T> void _print(set <T> v);
+template<class T, class V> void _print(map <T, V> v);
+template<class T> void _print(multiset <T> v);
+template<class T, class V> void _print(pair <T, V> p) {cout << "{"; _print(p.ff); cout << ","; _print(p.ss); cout << "}";}
+template<class T> void _print(vector <T> v) {cout << "[ "; for (T i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T> void _print(set <T> v) {cout << "[ "; for (T i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T> void _print(multiset <T> v) {cout << "[ "; for (T i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T, class V> void _print(map <T, V> v) {cout << "[ "; for (auto i : v) {_print(i); cout << " ";} cout << "]";}
+template<class T> void _print(stack<T>s){vector<T>v;while(s.size()){v.pb(s.top());s.pop();}_print(v);}
+template<class T> void _print(queue<T>q){vector<T>v;while(q.size()){v.pb(q.front());q.pop();}_print(v);}
+template<class T> void _print(priority_queue<T>q){vector<T>v;while(q.size()){v.pb(q.top());q.pop();}_print(v);}
+template<class T> void _print(priority_queue<T,vector<T>,greater<T>>q){vector<T>v;while(q.size()){v.pb(q.top());q.pop();}_print(v);}
+template<class T> void _print(deque<T>q){vector<T>v;while(q.size()){v.pb(q.front());q.pop_front();}_print(v);}
+
+
+void take(vector<vector<int>> &v , int n,int m){for (int i = 0; i <n ; ++i){vec temp;for (int j = 0; j < m; ++j){int x;cin>>x;temp.pb(x);}v.pb(temp);}}
+void take(vector<int> &v , int size){for (int i = 0; i <size ; ++i){int k;cin>>k;v.pb(k);}}
+void print(map<int,int>m ){for(auto q:m){ct<<q.ff<<" "<<q.ss<<el;}ct<<el;}
+void print(vector<pair<int,int>> &v){for(auto q:v){ct<<q.ff<<" "<<q.ss<<el;}ct<<el;}
+void print(vector<long long> &v ){for (int i = 0; i < v.size(); ++i){ct<<v[i]<<" ";}ct<<el;}
+void print(vector<vector<int>> &v){for (int i = 0; i <v.size() ; ++i){for (int j = 0; j < v[i].size(); ++j){ct<<v[i][j]<<sp;}ct<<el;}}
+void print(vec adj[],int n){for (int i = 0; i < n; ++i){ct<<i<<sp<<":"<<sp;for(auto t:adj[i]){ct<<t<<sp;}ct<<el;}ct<<el;}
+sg number_to_binary(int n){sg ans;while(n){if (n&1){ans+='1';}else ans+='0';n=n>>1;}reverse(all(ans));return ans;}
+int made_ceil(int divident,int divisor){if (divident%divisor==0){return (divident/divisor);}else{return (divident/divisor)+1;}}
+int binary_to_number(sg s){reverse(all(s));int ans=0;for (int i = 0; i < s.size(); ++i){if (s[i]=='1'){ans+=(1<<i);}}return ans;}
+bool cmp(pair<int,int>a,pair<int,int>b){if (a.ff!=b.ff){return a.ff<b.ff;}return a.ss>b.ss;}
+
+
+
+
+class Solution {
+public:
+    int f(int i,int j,sg &s,sg &t,vvi &dp){
+        if(j<0)return 1;
+        if(i<0)return 0;
+        if(dp[i][j]!=-1)return dp[i][j];
+        if(s[i]==t[j]){
+             dp[i][j]=f(i-1,j-1,s,t,dp)+f(i-1,j,s,t,dp);
+        }
+         else dp[i][j]=f(i-1,j,s,t,dp);
+        return dp[i][j];
+    }
+    
+    
+    
+
+    int numDistinct(string s, string t) {
+        
+//****************** MEMOISATION ********************************************
+        
+//       vvi dp(sz(s),vec(sz(t),-1));
+//       return f(sz(s)-1,sz(t)-1,s,t,dp);
+        
+        
+// ******************** TABULATION *********************************************
+        
+//          vvi dp(sz(s)+1,vector<long long>(sz(t)+1,0));
+//         for(int i=0;i<=sz(s);i++)dp[i][0]=1;
+        
+//         for(int i=1;i<=sz(s);i++){
+//             for(int j=1;j<=sz(t);j++){
+//                 if(s[i-1]==t[j-1])dp[i][j]=dp[i-1][j-1]+dp[i-1][j]%MOD;
+//                 else dp[i][j]=dp[i-1][j];
+//             }
+//         }
+
+//         return dp[sz(s)][sz(t)];
+        
+        
+        
+//************************   SPACE OPTIMIZATION *************************************
+        
+//          vector<long long>prev(sz(t)+1,0);
+//          prev[0]=1;
+        
+//         for(int i=1;i<=sz(s);i++){
+//             vector<long long>curr(sz(t)+1,0);
+//             curr[0]=1;
+//             for(int j=1;j<=sz(t);j++){
+//                 if(s[i-1]==t[j-1])curr[j]=(prev[j-1]+prev[j])%MOD;
+//                 else curr[j]=prev[j];
+//             }
+//             prev=curr;
+//             // print(prev);
+//         }
+        
+//         return prev[sz(t)];
+        
+        
+// *********************1 ROW SPACE OPTIMIZATION *******************************
+        
+        
+         vector<long long>prev(sz(t)+1,0);
+        
+        for(int i=1;i<=sz(s);i++){
+            prev[0]=1;
+            for(int j=sz(t);j>0;j--){
+                if(s[i-1]==t[j-1])prev[j]=(prev[j-1]+prev[j])%MOD;
+            }
+        }
+        return prev[sz(t)];
+        
+    }
+};
