@@ -73,3 +73,28 @@ public:
 
     }
 };
+
+//SPACE OPTIMIZATION ******************************************************************************************
+
+
+class Solution {
+public:
+       int uniquePathsWithObstacles(vector<vector<int>>& grid) {
+        int m=grid.size(),n=grid[0].size();
+        vector<long long int>prev(n,0);
+        for(int row=m-1;row>=0;row--){
+            vector<long long int>curr(n,0);
+            for(int col=n-1;col>=0;col--){
+            if(grid[row][col]==1){curr[col]=0;continue;}
+            if(row==m-1 && col==n-1 && grid[m-1][n-1]==0){curr[n-1]=1;continue;}
+            long long int down=0,right=0;
+            if(row<m-1)down=prev[col];
+            if(col<n-1)right=curr[col+1];
+            curr[col]=down+right;
+            }
+            prev=curr;
+        }
+        return prev[0];
+
+    }
+};
