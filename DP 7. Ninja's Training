@@ -35,3 +35,38 @@ class Solution {
 
     }
 };
+
+
+//TABULATION ********************************************************************************
+
+class Solution
+{
+public:
+    int maximumPoints(vector<vector<int>> &points, int n)
+    {
+        vector<vector<int>> dp(n, vector<int>(3, -1));
+        dp[0][0] = points[0][0];
+        dp[0][1] = points[0][1];
+        dp[0][2] = points[0][2];
+        int final_ans = 0;
+        for (int day = 1; day < n; ++day)
+        {
+            for (int task = 0; task < 3; ++task)
+            {
+                int ans = 0;
+                for (int next = 0; next < 3; next++)
+                {
+                    if (task != next)
+                    {
+                        ans = max(ans, points[day][task] + dp[day - 1][next]);
+                    }
+                }
+                dp[day][task] = ans;
+                final_ans = max(final_ans, ans);
+            }
+        }
+        return final_ans;
+    }
+};
+
+
