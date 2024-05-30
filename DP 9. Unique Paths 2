@@ -16,7 +16,7 @@ public:
     }
 };
 
-//TABULATION ******************************************************************************************************
+//TABULATION  METHOD 1 ******************************************************************************************
 
 
 class Solution {
@@ -43,6 +43,30 @@ public:
             if(grid[row][col]==0){
                 dp[row][col]=dp[row+1][col]+dp[row][col+1];
                 }
+            }
+        }
+        return dp[0][0];
+
+    }
+};
+
+//TABULATION  METHOD 2 ******************************************************************************************
+
+
+
+class Solution {
+public:
+       int uniquePathsWithObstacles(vector<vector<int>>& grid) {
+        int m=grid.size(),n=grid[0].size();
+        vector<vector<long long int>>dp(m,vector<long long int>(n,0));
+        for(int row=m-1;row>=0;row--){
+            for(int col=n-1;col>=0;col--){
+            if(grid[row][col]==1){dp[row][col]=0;continue;}
+            if(row==m-1 && col==n-1 && grid[m-1][n-1]==0){dp[m-1][n-1]=1;continue;}
+            long long int down=0,right=0;
+            if(row<m-1)down=dp[row+1][col];
+            if(col<n-1)right=dp[row][col+1];
+            dp[row][col]=down+right;
             }
         }
         return dp[0][0];
