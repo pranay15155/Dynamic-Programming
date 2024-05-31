@@ -1,0 +1,20 @@
+//MEMOIZATION ********************************************************************************************
+
+class Solution{   
+public:
+    bool f(int ind,int target,vector<vector<int>>&dp,vector<int>&arr){
+        if(target==0)return 1;
+        if(target<0 || ind>=arr.size())return 0;
+        if(dp[ind][target]!=-1)return dp[ind][target];
+        bool take=f(ind+1,target-arr[ind],dp,arr);
+        bool not_take=f(ind+1,target,dp,arr);
+        return dp[ind][ target]=take||not_take;
+    }
+    bool isSubsetSum(vector<int>arr, int sum){
+       vector<vector<int>>dp(arr.size(),vector<int>(sum+1,-1));
+       return f(0,sum,dp,arr);
+    }
+};
+
+//TABULATION **********************************************************************************************
+
