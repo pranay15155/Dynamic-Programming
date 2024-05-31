@@ -21,3 +21,48 @@ public:
 
 //TABULATION  ****************************************************************************************************************
 
+class Solution {
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+       int n=grid.size();
+       int m=grid[0].size();
+       vector<vector<int>>dp(n,vector<int>(m,-1));
+       for(int row=n-1;row>=0;row--){
+        for(int col=m-1;col>=0;col--){
+            if(row==n-1 && col==m-1){
+                dp[row][col]=grid[row][col];
+                continue;
+            }
+            int down=(row+1<=n-1)?dp[row+1][col]:(1e8);
+            int right=(col+1<=m-1)?dp[row][col+1]:(1e8);
+            dp[row][col]=grid[row][col]+min(down,right);
+        }
+       }
+       return dp[0][0];
+    }
+};
+
+//SPACE OPTIMIZATION *********************************************************************************************************
+
+class Solution {
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+       int n=grid.size();
+       int m=grid[0].size();
+       vector<int>prev(m,-1);
+       for(int row=n-1;row>=0;row--){
+        vector<int>curr(m,-1);
+        for(int col=m-1;col>=0;col--){
+            if(row==n-1 && col==m-1){
+                curr[col]=grid[row][col];
+                continue;
+            }
+            int down=(row+1<=n-1)?prev[col]:(1e8);
+            int right=(col+1<=m-1)?curr[col+1]:(1e8);
+            curr[col]=grid[row][col]+min(down,right);
+        }
+        prev=curr;
+       }
+       return prev[0];
+    }
+};
