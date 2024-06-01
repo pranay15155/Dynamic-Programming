@@ -1,0 +1,22 @@
+//MEMOIZATION *********************************************************************
+
+class Solution{
+public:
+ int f(int ind,int weight,int wt[],int val[],int n, vector<vector<int>>&dp){
+        if(ind==n-1){
+            if(weight>=wt[ind])return val[ind]*(weight/wt[ind]);
+            return 0;
+        }
+        if(dp[ind][weight]!=-1)return dp[ind][weight];
+        int take=(weight>=wt[ind])?val[ind]+f(ind,weight-wt[ind],wt,val,n,dp):0;
+        int not_take=f(ind+1,weight,wt,val,n,dp);
+        return dp[ind][weight]=max(take,not_take);
+    }
+
+    int knapSack(int N, int W, int val[], int wt[])
+    {
+      vector<vector<int>>dp(N,vector<int>(W+1,-1));
+      return f(0,W,wt,val,N,dp);
+    }
+};
+
