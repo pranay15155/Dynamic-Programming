@@ -3,8 +3,8 @@
 class Solution{   
 public:
     bool f(int ind,int target,vector<vector<int>>&dp,vector<int>&arr){
-        if(target==0)return 1;
         if(target<0 || ind>=arr.size())return 0;
+        if(target==arr[ind])return dp[ind][arr[ind]]=1;
         if(dp[ind][target]!=-1)return dp[ind][target];
         bool take=f(ind+1,target-arr[ind],dp,arr);
         bool not_take=f(ind+1,target,dp,arr);
@@ -18,3 +18,58 @@ public:
 
 //TABULATION **********************************************************************************************
 
+ bool isSubsetSum(vector<int>arr, int sum){
+        int n=arr.size();
+       vector<vector<int>>dp(arr.size(),vector<int>(sum+1,0));
+        for (int ind = n - 1; ind >= 0; --ind)
+    {
+        dp[ind][0] = true;
+        for (int tar = 1; tar <= sum; ++tar)
+        {
+            if (ind == n - 1)
+            {
+                if (arr[n - 1] <= sum)
+                {
+                    dp[n - 1][arr[n - 1]] = true;
+                }
+                continue;
+            }
+            int take = (tar >= arr[ind]) ? dp[ind + 1][tar - arr[ind]] : false;
+            int not_take = dp[ind + 1][tar];
+            dp[ind][tar] = take || not_take;
+        }
+    }
+        return dp[0][sum];
+    }
+
+//SPACE OPTIMIZATION ***************************************************************************************
+
+
+class Solution{   
+public:
+
+    bool isSubsetSum(vector<int>arr, int sum){
+        int n=arr.size();
+       vector<int>prev(sum+1,0);
+        for (int ind = n - 1; ind >= 0; --ind)
+    {
+        vector<int>curr(sum+1,0);
+        prev[0] = true;
+        for (int tar = 1; tar <= sum; ++tar)
+        {
+            if (ind == n - 1)
+            {
+                if (arr[n - 1] <= sum)
+                {
+                    curr[arr[n - 1]] = true;
+                }
+                continue;
+            }
+            int take = (tar >= arr[ind]) ? prev[tar - arr[ind]] : false;
+            int not_take = prev[tar];
+            curr[tar] = take || not_take;
+        }
+        prev=curr;
+    }
+        return prev[sum];
+    }
