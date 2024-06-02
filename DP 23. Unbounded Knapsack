@@ -20,3 +20,50 @@ public:
     }
 };
 
+//TABULATION ************************************************************************
+
+class Solution{
+public:
+    int knapSack(int N, int W, int val[], int wt[])
+    {
+      vector<vector<int>>dp(N,vector<int>(W+1,0));
+      
+      for(int wgt=0;wgt<=W;wgt++){
+          dp[N-1][wgt]=(wgt/wt[N-1])*val[N-1];
+      }
+      for(int ind=N-2;ind>=0;ind--){
+          for(int wgt=0;wgt<=W;wgt++){
+            int take=(wgt>=wt[ind])?val[ind]+dp[ind][wgt-wt[ind]]:0;
+            int not_take=dp[ind+1][wgt];
+            dp[ind][wgt]=max(take,not_take);
+          }
+      }
+      return dp[0][W];
+    }
+};
+
+//SPACE OPTIMIZATION **********************************************************************
+
+class Solution{
+public:
+    int knapSack(int N, int W, int val[], int wt[])
+    {
+      vector<int>prev(W+1,0);
+      
+      for(int wgt=0;wgt<=W;wgt++){
+          prev[wgt]=(wgt/wt[N-1])*val[N-1];
+      }
+      for(int ind=N-2;ind>=0;ind--){
+          vector<int>curr(W+1,0);
+          for(int wgt=0;wgt<=W;wgt++){
+            int take=(wgt>=wt[ind])?val[ind]+curr[wgt-wt[ind]]:0;
+            int not_take=prev[wgt];
+            curr[wgt]=max(take,not_take);
+          }
+          prev=curr;
+      }
+      return prev[W];
+    }
+};
+
+
