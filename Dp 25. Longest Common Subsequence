@@ -53,3 +53,31 @@ public:
 
 //SPACE OPTIMIZATION *************************************************************
 
+
+
+class Solution {
+public:
+    int n,m;
+    int longestCommonSubsequence(string text1, string text2) {
+        n=text1.size();
+        m=text2.size();
+        vector<int>prev(m+1,0);
+        prev[m-1]=(text1[n-1]==text2[m-1])?1:0;
+        for(int ind1=n-1;ind1>=0;ind1--){
+             vector<int>curr=prev;
+            for(int ind2=m-1;ind2>=0;ind2--){
+              int ans=0;
+              if(ind1==n-1 && ind2==m-1)continue;
+              if(text1[ind1]==text2[ind2])ans=1+prev[ind2+1];
+              if(text1[ind1]!=text2[ind2]){
+                if(ind1<n-1)ans=max(ans,prev[ind2]);
+                if(ind2<m-1)ans=max(ans,curr[ind2+1]);
+              }
+            curr[ind2]=ans;
+            }
+            prev=curr;
+        }
+        return prev[0];
+    }
+};
+
