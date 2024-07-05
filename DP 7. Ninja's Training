@@ -36,6 +36,38 @@ class Solution {
     }
 };
 
+//METHOD --2 /////////////
+
+
+class Solution {
+  public:
+    long long f(int row,int col,vector<vector<int>>& points,vector<vector<int>>& dp){
+       if(row==0){
+           return points[row][col];
+       }
+       if(dp[row][col]!=-1)return dp[row][col];
+       long long temp=0;
+           for(int i=0;i<3;i++){
+               if(i!=col){
+                   temp=max(temp,f(row-1,i,points,dp));
+               }
+           }
+           temp+=points[row][col];
+           return dp[row][col]=temp;
+       
+    }
+    int maximumPoints(vector<vector<int>>& points, int n) {
+       vector<vector<int>>dp(n,vector<int>(3,-1));
+       long long x=0;
+       for(int col=0;col<3;col++){
+           x=max(x,f(n-1,col,points,dp));
+       }
+    //   d(dp);
+       return x;
+
+    }
+};
+
 
 //TABULATION ********************************************************************************
 
