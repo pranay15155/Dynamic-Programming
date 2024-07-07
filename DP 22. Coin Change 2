@@ -45,6 +45,28 @@ public:
     }
 };
 
+//METHOD--2
+
+class Solution {
+public:
+    int change(int amount, vector<int>& coins) {
+        int n=coins.size();
+        vector<vector<int>>dp(n,vector<int>(amount+1,0));
+        for(int ind=n-1;ind>=0;ind--){
+            for(int target=0;target<=amount;target++){
+                if(ind==n-1){
+                    if(target%coins[ind]==0)dp[ind][target]=1;
+                    continue;
+                }
+                int take=(target>=coins[ind])?dp[ind][target-coins[ind]]:0;
+                int not_take=dp[ind+1][target];
+                dp[ind][target]=take+not_take;
+            }
+        }
+        return dp[0][amount];
+    }
+};
+
 //SPACE OPTIMIZATION **********************************************************************
 
 class Solution {
