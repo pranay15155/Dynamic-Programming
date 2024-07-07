@@ -42,6 +42,29 @@ public:
     }
 };
 
+//METHOD--2
+
+class Solution{
+public:
+ 
+    int knapSack(int N, int W, int val[], int wt[])
+    {
+       vector<vector<int>>dp(N,vector<int>(W+1,0));
+       for(int row=N-1;row>=0;row--){
+           for(int w=0;w<=W;w++){
+               if(row==N-1){
+                   if(w>=wt[row])dp[row][w]=val[row]*(w/wt[row]);
+                   continue;
+               }
+               int take=w>=wt[row]?dp[row][w-wt[row]]+val[row]:0;
+               int not_take=dp[row+1][w];
+               dp[row][w]=max(take,not_take);
+           }
+       }
+       return dp[0][W];
+    }
+};
+
 //SPACE OPTIMIZATION **********************************************************************
 
 class Solution{
