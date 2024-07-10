@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        vector<int>prefix(prices.size(),0);
+        int ans=0;
+        prefix[0]=prices[0];
+        for(int i=1;i<prices.size();i++){
+            prefix[i]=min(prices[i],prefix[i-1]);
+        }
+         for(int i=1;i<prices.size();i++){
+           ans=max(ans,prices[i]-prefix[i]);
+        }
+        return ans;
+
+    }
+};
