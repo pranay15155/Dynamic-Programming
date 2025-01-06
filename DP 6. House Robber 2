@@ -39,3 +39,30 @@ public:
 //and passed 1 in zero becuase 0th element is not taken hence n-1 element can be taken 
 
 
+
+
+//METHOD 2
+USING 2D VECTOR
+
+class Solution {
+public:
+ int n;
+ int dp[102][2];
+    int f(int ind,int zero,vector<int>& nums){
+        if(ind==n-1){
+            if(zero==1)return nums[ind];
+            else return 0;
+        }
+        if(ind>=n)return 0;
+        if(dp[ind][zero]!=-1)return dp[ind][zero];
+        int take=nums[ind]+f(ind+2,zero,nums);
+        int not_take=f(ind+1,zero,nums);
+        return dp[ind][zero]=max(take,not_take);
+    }
+
+    int rob(vector<int>& nums) {
+        n=nums.size();
+        memset(dp,-1,sizeof(dp));
+        return max(nums[0]+f(2,0,nums),f(1,1,nums));
+    }
+};
