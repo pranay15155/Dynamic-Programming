@@ -1,3 +1,31 @@
+https://leetcode.com/problems/triangle/description/
+
+
+class Solution {
+public:
+    int n,m;
+    int dp[205][205];
+    int f(int row,int col,vector<vector<int>>& triangle){
+        if(row==n-1)return triangle[row][col];
+        if(row>=n || col>row)return 1e8;
+        if(dp[row][col]!=-1)return dp[row][col];
+        int down=f(row+1,col,triangle);
+        int down_right=f(row+1,col+1,triangle);
+        return dp[row][col]=min(down,down_right)+triangle[row][col];
+    }
+    int minimumTotal(vector<vector<int>>& triangle) {
+        n=triangle.size();
+        m=triangle[n-1].size();
+        memset(dp,-1,sizeof(dp));
+        return f(0,0,triangle);
+
+    }
+};
+//2
+//3 4
+//6 5 7 
+//4 1 8 3
+
 //MEMOIZATION ****************************************************************************************************
 
 class Solution {
