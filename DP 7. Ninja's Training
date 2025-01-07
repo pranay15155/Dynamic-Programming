@@ -1,4 +1,38 @@
+https://www.geeksforgeeks.org/problems/geeks-training/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=geeks-training
+
+
 //MEMOIZATION
+
+class Solution {
+  public:
+    int dp[100005][4];
+    int f(int ind,int prev,vector<vector<int>>& arr,int n) {
+        if(ind==n-1){
+            int ans=0;
+            for(int i=0;i<arr[n-1].size();i++){
+                if(i!=prev)ans=max(ans,arr[n-1][i]);
+            }
+            return ans;
+        }
+        if(dp[ind][prev]!=-1)return dp[ind][prev];
+        int ans=0;
+        for(int i=0;i<arr[ind].size();i++){
+            if(i!=prev){
+                ans=max(ans,arr[ind][i]+f(ind+1,i,arr,n));
+            }
+        }
+        return dp[ind][prev]=ans;
+    }
+    int maximumPoints(vector<vector<int>>& arr, int n) {
+        memset(dp,-1,sizeof(dp));
+        return f(0,3,arr,n);
+    }
+};
+
+
+//
+
+
 
 void d(vector<int>&v){for(auto &t:v){cout<<t<<" ";}cout<<endl;}
 void d(vector<vector<int>>&v){for(auto &a:v){for(auto &b:a){cout<<b<<" ";}cout<<endl;}}
