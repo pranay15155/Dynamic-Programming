@@ -1,3 +1,44 @@
+https://leetcode.com/problems/minimum-falling-path-sum/description/
+
+class Solution {
+public:
+    int n, m;
+    int dp[105][105];
+    int f(int row, int col, vector<vector<int>>& matrix) {
+        if (row >= n || col >= m || row < 0 || col < 0)
+            return 1e8;
+        if (row == n - 1) {
+            return matrix[row][col];
+        }
+        if (dp[row][col] != -1e6) return dp[row][col];
+        int down = f(row + 1, col, matrix);
+        int down_left = f(row + 1, col - 1, matrix);
+        int down_right = f(row + 1, col + 1, matrix);
+
+        return dp[row][col] =matrix[row][col] + min({down, down_right, down_left});
+    }
+
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        n = matrix.size();
+        m = matrix[0].size();
+        //-1 can be a possible answer hence we cannot take -1 as non visited
+        //recursion value
+        for (int i = 0; i < 105; i++) {
+            for (int j = 0; j < 105; j++) {
+                dp[i][j] = -1e6;
+            }
+        }
+        int ans = 1e8;
+        for (int i = 0; i < m; i++) {
+            ans = min(ans, f(0, i, matrix));
+        }
+        return ans;
+    }
+};
+
+
+
+
 //MEMOIZATION ********************************************************************************************************
 
 class Solution {
