@@ -1,3 +1,28 @@
+https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1
+
+https://www.naukri.com/code360/problems/subset-sum-equal-to-k_1550954?leftPanelTab=1%3Fsource%3Dyoutube&campaign=striver_dp_videos&utm_source=youtube&utm_medium=affiliate&utm_campaign=striver_dp_videos
+
+
+class Solution {
+  public:
+    // int n;
+    int f(int ind,int sum,vector<int>& arr,vector<vector<int>>&dp,int n){
+        if(sum==0)return 1;
+        if(sum<0 ||ind>=n)return 0;
+        if(dp[ind][sum]!=-1)return dp[ind][sum];
+        int take=f(ind+1,sum-arr[ind],arr,dp,n);
+        int not_take=f(ind+1,sum,arr,dp,n);
+        return dp[ind][sum]=take||not_take;
+    }
+    bool isSubsetSum(vector<int>& arr, int target) {
+        int n=arr.size();
+        vector<vector<int>>dp(n+5,vector<int>(target+1,-1));
+        return f(0,target,arr,dp,n);
+        
+    }
+};
+
+
 //MEMOIZATION ********************************************************************************************
 
 class Solution{   
