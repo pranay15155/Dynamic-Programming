@@ -3,8 +3,8 @@ https://www.geeksforgeeks.org/problems/perfect-sum-problem5633/1?utm_source=yout
 class Solution {
   public:
      int f(int ind,int sum,vector<int>& arr,vector<vector<int>>&dp,int n){
-        if(sum==0 && ind==n)return 1;
-        if(sum<0 ||ind>=n)return 0; //here 0 is returned when we reach index >=n or sum<0
+        if(sum==0 && ind==n)return 1; 
+        if(sum<0 ||ind>=n)return 0; //written explanation below
         if(dp[ind][sum]!=-1)return dp[ind][sum];
         int take=f(ind+1,sum-arr[ind],arr,dp,n);
         int not_take=f(ind+1,sum,arr,dp,n);
@@ -16,6 +16,13 @@ class Solution {
         return f(0,target,arr,dp,n);
     }
 };
+//at base case if(sum==0 && ind==n)return 1;
+// why ind==n and not ind==n-1 because at ind==n-1 there are two possibility
+//that arr[n-1]=0 && sum==0 
+//or sum==arr[n-1] 
+//these both are covered in this base case when we reach n from all the ways possible
+//and if we reach n and we donot have sum==0 then we return 0 
+//which is in this line -> if(sum<0 ||ind>=n)return 0;
 
 
 //MEMOIZATION ***************************************************************************
