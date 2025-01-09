@@ -1,3 +1,32 @@
+https://www.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1
+
+
+class Solution {
+  public:
+    
+    int f(int ind,int curr_weight,vector<int> &weight,vector<int> &value,int n, vector<vector<int>>&dp){
+    if(ind>=n || curr_weight<=0 )return 0;
+    if(dp[ind][curr_weight]!=-1)return dp[ind][curr_weight];
+    int take=0;
+    if(curr_weight>=weight[ind])take=value[ind]+f(ind+1,curr_weight-weight[ind],weight,value,n,dp);
+    int not_take=f(ind+1,curr_weight,weight,value,n,dp);
+    return dp[ind][curr_weight]=max(take,not_take);
+    }
+
+    int knapSack(int capacity, vector<int> &val, vector<int> &wt) {
+        int n=val.size();
+        vector<vector<int>>dp(n,vector<int>(capacity+1,-1));
+        return f(0,capacity,wt,val,n,dp);
+    }
+};
+
+//why if(curr_weight>=weight[ind])take=value[ind]+f(ind+1,curr_weight-weight[ind],weight,value,n,dp);
+//because see below example if we take weight with less capacity it is wrong and when weight 
+//goes negative we return 0 but we are already adding its value which is wrong 
+
+// 3
+
+
 //MEMOIZATION ****************************************************************
 
 class Solution
