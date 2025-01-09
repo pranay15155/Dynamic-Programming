@@ -1,3 +1,36 @@
+https://www.geeksforgeeks.org/problems/knapsack-with-duplicate-items4201/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=knapsack-with-duplicate-items
+
+
+//the difference in this and 0/1 knapsack is that in that question i can take the item only once but 
+//here i can take it as many times as i want
+
+class Solution {
+  public:
+   int f(int ind,int curr_weight,vector<int> &weight,vector<int> &value,int n, vector<vector<int>>&dp){
+    if(ind>=n || curr_weight<=0 )return 0;
+    if(dp[ind][curr_weight]!=-1)return dp[ind][curr_weight];
+    int take=0;
+    if(curr_weight>=weight[ind])take=value[ind]+f(ind,curr_weight-weight[ind],weight,value,n,dp);
+    int not_take=f(ind+1,curr_weight,weight,value,n,dp);
+    return dp[ind][curr_weight]=max(take,not_take);
+    }
+
+    int knapSack(vector<int>& val, vector<int>& wt, int capacity) {
+        int n=val.size();
+        vector<vector<int>>dp(n,vector<int>(capacity+1,-1));
+        return f(0,capacity,wt,val,n,dp);
+    }
+};
+//why if(curr_weight>=weight[ind])take=value[ind]+f(ind,curr_weight-weight[ind],weight,value,n,dp);
+//because see below example if we take weight with less capacity it is wrong and when weight 
+//goes negative we return 0 but we are already adding its value which is wrong 
+
+// 3 ->capacity
+// 1 2 3 ->value
+// 4 5 6 ->weight
+
+
+
 //MEMOIZATION *********************************************************************
 
 class Solution{
