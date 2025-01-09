@@ -24,7 +24,9 @@ class Solution {
 //because see below example if we take weight with less capacity it is wrong and when weight 
 //goes negative we return 0 but we are already adding its value which is wrong 
 
-// 3
+// 3 ->capacity
+// 1 2 3 ->value
+// 4 5 6 ->weight
 
 
 //MEMOIZATION ****************************************************************
