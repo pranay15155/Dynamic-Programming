@@ -1,3 +1,5 @@
+https://leetcode.com/problems/longest-palindromic-subsequence/description/
+
 //same as lcs problem just take one string from forward and second string reversed and apply lcs on both to form longest palindrome 
 
 class Solution {
