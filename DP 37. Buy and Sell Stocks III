@@ -1,3 +1,45 @@
+https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/
+
+
+
+class Solution {
+public:
+int n;
+int dp[100005][2][4];
+    int f(int ind,int buy,int limit,vector<int>& prices){
+        if(ind>=n || limit>=2)return 0;  //whenever we reach n or  2 transactional limit we return 0
+        if(dp[ind][buy][limit]!=-1)return dp[ind][buy][limit];
+        int ans=0;
+        if(buy){ //here i am buying stocks
+           ans=-prices[ind]+f(ind+1,0,limit,prices); //here i am buying stock at current index
+           ans=max(ans,f(ind+1,1,limit,prices)); //here i will buy stock at future index
+        }
+        else{
+            ans=prices[ind]+f(ind+1,1,limit+1,prices); //here i am selling stock at current index and while selling i increase limit because a transaction is completed 
+            ans=max(ans,f(ind+1,0,limit,prices));//here i will sell stock at future index
+        }
+        return dp[ind][buy][limit]=ans;
+    }
+    int maxProfit(vector<int>& prices) {
+        n=prices.size();
+        memset(dp,-1,sizeof(dp));
+        return f(0,1,0,prices);
+    }
+};
+
+//in this question i am taking limit as third parameter
+
+
+
+
+
+
+
+
+
+
+
+
 //MEMOISATION 
 
 class Solution {
